@@ -264,7 +264,7 @@ double get_steer_error(double current_x, double current_y, double current_yaw, d
   double target_vec_in_norm_direction = dot_prod / std::sqrt(std::pow(norm_of_lane.x, 2) + std::pow(norm_of_lane.y, 2));
 
   // Return the negative of the target vector projection as the steering error
-  return -1 * target_vec_in_norm_direction;
+  return 1 * target_vec_in_norm_direction;
 }
 
 
@@ -287,7 +287,7 @@ double get_throttle_error(double current_x, double current_y, double current_v, 
   
   std::cout << "Throttle req acceleration: " << acceleration << "m/s2 from (" << current_x << ", " << current_y << ") " << current_v << "m/s -> (" << target_x << ", " << target_y << ") " << target_v << "m/s" << std::endl;
   
-  return -1 * acceleration;
+  return 1 * acceleration;
   
   // return current_v - target_v;
 }

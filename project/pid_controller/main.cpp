@@ -365,10 +365,12 @@ int main ()
             brake_output = 0;
           } else {
             throttle_output = 0;
-            brake_output = 0;
-            if (throttle < -0.2)
+            if (throttle < -0.9)
             {
               brake_output = -throttle/4.0;
+            }
+            else{
+              brake_output = 0;
             }
           }
 
