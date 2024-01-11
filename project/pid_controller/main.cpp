@@ -221,7 +221,8 @@ int main ()
 
   PID pid_steer = PID();
   // pid_steer.Init(2.93, 0.49, 10.33, 1.2, -1.2);
-   pid_steer.Init(0.25, 0.1, 0.5, 1.2, -1.2);
+  //  pid_steer.Init(0.25, 0.1, 0.5, 1.2, -1.2);
+     pid_steer.Init(0.1, 0.002, 0.0125, 1.2, -1.2);
 
   // initialize pid throttle
   /**
@@ -230,7 +231,8 @@ int main ()
 
   PID pid_throttle = PID();
   // pid_throttle.Init(3.0, 0.5, 10.0, 1.0, -1.0);
-    pid_throttle.Init(0.25, 0.05, 0.1, 1.0, -1.0);
+    // pid_throttle.Init(0.25, 0.05, 0.1, 1.0, -1.0);
+    pid_throttle.Init(2.0, 0.8, 0.1, 1.0, -1.0);
 
   h.onMessage([&pid_steer, &pid_throttle, &new_delta_time, &timer, &prev_timer, &i, &prev_timer](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode)
   {
@@ -363,7 +365,11 @@ int main ()
             brake_output = 0;
           } else {
             throttle_output = 0;
-            brake_output = -throttle;
+            brake_output = 0;
+            if (throttle < -0.2)
+            {
+              brake_output = -throttle/4.0;
+            }
           }
 
           // Save data

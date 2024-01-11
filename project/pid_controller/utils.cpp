@@ -11,6 +11,7 @@
 #include "utils.h"
 
 #include <cmath>
+#include <cfloat>
 
 namespace utils {
 
@@ -247,7 +248,6 @@ double clampD(const double& v, const double& lo, const double& hi) {
   return (v < lo) ? lo : (hi < v) ? hi : v;
 }
 
-}  // namespace utils
 
 
 double get_steer_error(double current_x, double current_y, double current_yaw, double target_x, double target_y) {
@@ -291,3 +291,5 @@ double get_throttle_error(double current_x, double current_y, double current_v, 
   
   // return current_v - target_v;
 }
+
+}  // namespace utils
