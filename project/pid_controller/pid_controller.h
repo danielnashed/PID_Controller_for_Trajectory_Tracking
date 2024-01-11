@@ -8,6 +8,9 @@
 #define PID_CONTROLLER_H
 
 class PID {
+private:
+  /* data */ 
+
 public:
 
    /**
@@ -17,18 +20,27 @@ public:
     /*
     * Errors
     */
+    double p_error{0};
+    double d_error{0};
+    double i_error{0};
 
     /*
     * Coefficients
     */
+    double Kp{0};
+    double Kd{0};
+    double Ki{0};
 
     /*
     * Output limits
     */
+    double output_lim_max{0};
+    double output_lim_min{0};
   
     /*
     * Delta time
     */
+    double delta_time{0};
 
     /*
     * Constructor
