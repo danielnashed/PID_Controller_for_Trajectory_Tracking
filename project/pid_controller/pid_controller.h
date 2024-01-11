@@ -23,24 +23,25 @@ public:
     double p_error{0};
     double d_error{0};
     double i_error{0};
+    double prev_cte{0};
 
     /*
     * Coefficients
     */
-    double Kp{0};
-    double Kd{0};
-    double Ki{0};
+    double Kp{1};
+    double Kd{1};
+    double Ki{1};
 
     /*
     * Output limits
     */
-    double output_lim_max{0};
-    double output_lim_min{0};
+    double output_lim_max{10};
+    double output_lim_min{-10};
   
     /*
     * Delta time
     */
-    double delta_time{0};
+    double delta_time{1};
 
     /*
     * Constructor
