@@ -221,7 +221,7 @@ int main ()
 
   PID pid_steer = PID();
   // pid_steer.Init(2.93, 0.49, 10.33, 1.2, -1.2);
-   pid_steer.Init(1, 0.5, 1, 1.2, -1.2);
+   pid_steer.Init(0.25, 0.1, 0.5, 1.2, -1.2);
 
   // initialize pid throttle
   /**
@@ -230,7 +230,7 @@ int main ()
 
   PID pid_throttle = PID();
   // pid_throttle.Init(3.0, 0.5, 10.0, 1.0, -1.0);
-    pid_throttle.Init(1, 0.5, 1, 1.0, -1.0);
+    pid_throttle.Init(0.25, 0.05, 0.1, 1.0, -1.0);
 
   h.onMessage([&pid_steer, &pid_throttle, &new_delta_time, &timer, &prev_timer, &i, &prev_timer](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode)
   {
@@ -311,7 +311,7 @@ int main ()
           * TODO (step 3): uncomment these lines
           **/
           // Compute control to apply
-          pid_steer.prev_cte = yaw;
+          //pid_steer.prev_cte = yaw;
           pid_steer.UpdateError(error_steer);
           steer_output = pid_steer.TotalError();
 
@@ -351,7 +351,7 @@ int main ()
           * TODO (step 2): uncomment these lines
           **/
           // Compute control to apply
-          pid_throttle.prev_cte = velocity;
+          //pid_throttle.prev_cte = velocity;
           pid_throttle.UpdateError(error_throttle);
           double throttle = pid_throttle.TotalError();
 

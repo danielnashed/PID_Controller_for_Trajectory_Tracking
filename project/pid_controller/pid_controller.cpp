@@ -31,6 +31,7 @@ void PID::UpdateError(double cte) {
    /**
    * TODO: Update PID errors based on cte.
    **/
+  if (abs(delta_time) < 0.000001) return;
    p_error = Kp * cte;
    double diff_cte = cte - prev_cte;
    prev_cte = cte;
