@@ -248,3 +248,46 @@ double clampD(const double& v, const double& lo, const double& hi) {
 }
 
 }  // namespace utils
+
+
+double get_steer_error(double current_x, double current_y, double current_yaw, double target_x, double target_y) {
+  // Calculate the vector from the current position to the target position
+  carla::geom::Vector2D target_vec = carla::geom::Vector2D(target_x - current_x, target_y - current_y);
+
+  // Calculate the normalized vector perpendicular to the current movement direction
+  carla::geom::Vector2D norm_of_lane = carla::geom::Vector2D(-std::sin(current_yaw), std::cos(current_yaw));
+
+  // Calculate the dot product between the target vector and the normalized direction vector
+  double dot_prod = target_vec.x * norm_of_lane.x + target_vec.y * norm_of_lane.y;
+
+  // Calculate the projection of the target vector onto the normalized direction vector
+  double target_vec_in_norm_direction = dot_prod / std::sqrt(std::pow(norm_of_lane.x, 2) + std::pow(norm_of_lane.y, 2));
+
+  // Return the negative of the target vector projection as the steering error
+  return -1 * target_vec_in_norm_direction;
+}
+
+
+double calc_acceleration(const double& v_i, const double& v_f, const double& d) {
+  double a{0.0};
+  if (std::abs(d) < DBL_EPSILON) {
+    a = std::numeric_limits<double>::infinity();
+  } else {
+    a = (std::pow(v_f, 2) - std::pow(v_i, 2)) / (2.0 * d);
+  }
+  return a;
+}
+  
+double get_throttle_error(double current_x, double current_y, double current_v, double target_x, double target_y, double target_v) {
+  double distance = std::sqrt(std::pow(target_x - current_x, 2) + std::pow(target_y - current_y, 2));
+  if (std::abs(distance) < DBL_EPSILON)
+    return 0.0;
+   
+  double acceleration = calc_acceleration(current_v, target_v, distance);
+  
+  std::cout << "Throttle req acceleration: " << acceleration << "m/s2 from (" << current_x << ", " << current_y << ") " << current_v << "m/s -> (" << target_x << ", " << target_y << ") " << target_v << "m/s" << std::endl;
+  
+  return -1 * acceleration;
+  
+  // return current_v - target_v;
+}

@@ -303,9 +303,10 @@ int main ()
           /**
           * TODO (step 3): compute the steer error (error_steer) from the position and the desired trajectory
           **/
-          double actual_yaw = yaw;
-          double desired_yaw = angle_between_points(x_points[x_points.size()-2], y_points[y_points.size()-2], x_points[x_points.size()-1], y_points[y_points.size()-1]);
-          error_steer = desired_yaw - actual_yaw;
+          // double actual_yaw = yaw;
+          // double desired_yaw = angle_between_points(x_points[x_points.size()-2], y_points[y_points.size()-2], x_points[x_points.size()-1], y_points[y_points.size()-1]);
+          // error_steer = desired_yaw - actual_yaw;
+          error_steer = utils::get_steer_error(x_position, y_position, yaw, x_points[x_points.size()-1], y_points[y_points.size()-1]);
 
           /**
           * TODO (step 3): uncomment these lines
@@ -340,10 +341,11 @@ int main ()
           * TODO (step 2): compute the throttle error (error_throttle) from the position and the desired speed
           **/
           // modify the following line for step 2
-          double actual_speed = velocity;
-          double desired_speed = v_points[v_points.size()-1];
-          error_throttle = desired_speed - actual_speed;
-
+          // double actual_speed = velocity;
+          // double desired_speed = v_points[v_points.size()-1];
+          // error_throttle = desired_speed - actual_speed;
+          error_throttle = utils::get_throttle_error(x_position, y_position, velocity, x_points[x_points.size()-1], y_points[y_points.size()-1], v_points[v_points.size()-1]);
+          
           double throttle_output;
           double brake_output;
 
