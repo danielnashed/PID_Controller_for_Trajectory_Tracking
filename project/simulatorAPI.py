@@ -811,9 +811,9 @@ def game_loop(args):
 
         # Spawn some obstacles to avoid
         batch = []
-        # batch.append(SpawnNPC(client, world, args, 30, 1.5))
-        # batch.append(SpawnNPC(client, world, args, 65, -3 *1.5))
-        batch.append(SpawnNPC(client, world, args, 110, -0.1 * 1.5))
+        batch.append(SpawnNPC(client, world, args, 30, 1.5))
+        batch.append(SpawnNPC(client, world, args, 65, -3 *1.5))
+        batch.append(SpawnNPC(client, world, args, 110, -1 * 1.5))
 
         for response in carla.Client.apply_batch_sync(client, batch):
             if response.error:

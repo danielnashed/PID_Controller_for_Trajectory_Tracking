@@ -263,33 +263,32 @@ double get_steer_error(double current_x, double current_y, double current_yaw, d
   // Calculate the projection of the target vector onto the normalized direction vector
   double target_vec_in_norm_direction = dot_prod / std::sqrt(std::pow(norm_of_lane.x, 2) + std::pow(norm_of_lane.y, 2));
 
-  // Return the negative of the target vector projection as the steering error
-  return 1 * target_vec_in_norm_direction;
+  // Return target vector projection as the steering error
+  return target_vec_in_norm_direction;
 }
 
 
 double calc_acceleration(const double& v_i, const double& v_f, const double& d) {
-  double a{0.0};
+
+  double accel{0.0};
+
   if (std::abs(d) < DBL_EPSILON) {
-    a = std::numeric_limits<double>::infinity();
+    accel = std::numeric_limits<double>::infinity();
   } else {
-    a = (std::pow(v_f, 2) - std::pow(v_i, 2)) / (2.0 * d);
+    accel = (std::pow(v_f, 2) - std::pow(v_i, 2)) / (2*d);
   }
-  return a;
+  return accel;
 }
   
 double get_throttle_error(double current_x, double current_y, double current_v, double target_x, double target_y, double target_v) {
-  double distance = std::sqrt(std::pow(target_x - current_x, 2) + std::pow(target_y - current_y, 2));
-  if (std::abs(distance) < DBL_EPSILON)
-    return 0.0;
+  double d = std::sqrt(std::pow(target_x - current_x, 2) + std::pow(target_y - current_y, 2));
+  if (std::abs(d) < DBL_EPSILON)
+    return 0;
    
-  double acceleration = calc_acceleration(current_v, target_v, distance);
+  double accel = calc_acceleration(current_v, target_v, d);
   
-  std::cout << "Throttle req acceleration: " << acceleration << "m/s2 from (" << current_x << ", " << current_y << ") " << current_v << "m/s -> (" << target_x << ", " << target_y << ") " << target_v << "m/s" << std::endl;
-  
-  return 1 * acceleration;
-  
-  // return current_v - target_v;
+  return accel;
+
 }
 
 }  // namespace utils

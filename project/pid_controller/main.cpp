@@ -222,7 +222,7 @@ int main ()
   PID pid_steer = PID();
   // pid_steer.Init(2.93, 0.49, 10.33, 1.2, -1.2);
   //  pid_steer.Init(0.25, 0.1, 0.5, 1.2, -1.2);
-     pid_steer.Init(0.1, 0.002, 0.025, 1.2, -1.2);
+     pid_steer.Init(0.1, 0.002, 0.01, 1.2, -1.2);
 
   // initialize pid throttle
   /**
@@ -314,7 +314,6 @@ int main ()
           * TODO (step 3): uncomment these lines
           **/
           // Compute control to apply
-          //pid_steer.prev_cte = yaw;
           pid_steer.UpdateError(error_steer);
           steer_output = pid_steer.TotalError();
 
@@ -355,7 +354,6 @@ int main ()
           * TODO (step 2): uncomment these lines
           **/
           // Compute control to apply
-          //pid_throttle.prev_cte = velocity;
           pid_throttle.UpdateError(error_throttle);
           double throttle = pid_throttle.TotalError();
 
@@ -366,14 +364,7 @@ int main ()
             
           } else {
             throttle_output = 0;
-            brake_output = -throttle;
-            // if (throttle < -0.9)
-            // {
-            //   brake_output = -throttle/4.0;
-            // }
-            // else{
-            //   brake_output = 0;
-            // }
+            brake_output = -throttle * 0.8;
           }
 
           // Save data

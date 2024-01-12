@@ -43,7 +43,6 @@ void PID::UpdateError(double cte) {
    p_error = Kp * cte;
    prev_cte = cte;
    d_error = Kd * (diff_cte/delta_time);
-   // d_error = Kd * ((cte - d_error/Kd)/delta_time);
    i_error += Ki * cte * delta_time;
 }
 
@@ -62,8 +61,6 @@ double PID::TotalError() {
       {
          control = output_lim_max;
       }
-      // control = max(control, output_lim_min);
-      // control = min(control, output_lim_max);
       return control;
 }
 
